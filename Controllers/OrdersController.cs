@@ -24,7 +24,7 @@ namespace QLDonHangAPI.Controllers
         [HttpPost("insert")]
         public async Task<IActionResult> insertOrder(Orders obj)
         {
-            try
+            try  
             {
                 var oT = await _QLDHService.Insert(obj);
                 return Ok(oT);
@@ -34,7 +34,7 @@ namespace QLDonHangAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpPost("delete")]
         public async Task<IActionResult> deleteOrder(int id)
         {
