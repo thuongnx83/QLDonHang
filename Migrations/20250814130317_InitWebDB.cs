@@ -16,6 +16,29 @@ namespace QLDonHangAPI.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    FullName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    Password = table.Column<string>(type: "longtext", nullable: true),
+                    Email = table.Column<string>(type: "longtext", nullable: true),
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DateModify = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastLogin = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreateBy = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    ModifyBy = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "OrderItem",
                 columns: table => new
                 {
@@ -72,11 +95,37 @@ namespace QLDonHangAPI.Migrations
                     table.PrimaryKey("PK_Products", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    FullName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    Password = table.Column<string>(type: "longtext", nullable: true),
+                    Email = table.Column<string>(type: "longtext", nullable: true),
+                    Active = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DateModify = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastLogin = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreateBy = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    ModifyBy = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "OrderItem");
 
@@ -85,6 +134,9 @@ namespace QLDonHangAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

@@ -9,6 +9,8 @@ namespace QLDonHangAPI.Data
         }
 
         // register the classes 
+        public DbSet<Accounts> Accounts { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Products> Products { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
