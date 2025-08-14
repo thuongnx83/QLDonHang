@@ -11,6 +11,8 @@ namespace QLDonHangAPI.Services
         Task<Accounts> Insert(Accounts obj);
         Task<Accounts> Update(Accounts obj);
         Task<Accounts> getByIdAsync(int id);
+        Task<bool> checkbyUserName(string username);
+        Task<AccountInfo> getLogin(string _username, string _password);
         Task<bool> deleteByIdAsync(int id);
     }
 }

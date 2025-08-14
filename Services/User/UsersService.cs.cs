@@ -90,5 +90,42 @@ namespace QLDonHangAPI.Services
                 return false;
             }
         }
+
+        public async Task<bool> checkbyUserName(string username)
+        {
+            try
+            {
+                var lst = await _QLDonHangDbContext.Users.Where(_ => _.UserName == username).ToListAsync();
+                return lst.Count > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public async Task<UserInfo> getLogin(string _username, string _password)
+        {
+            try
+            {
+                var lst = await _QLDonHangDbContext.Users.Where(_ => _.UserName == _username && _.Password == _password).ToListAsync();
+                if (lst.Count > 0)
+                {
+                    var oT = lst[0];
+                    UserInfo obj = new UserInfo();
+                    obj.Id = oT.Id;
+                    obj.UserName = oT.UserName;
+                    obj.FullName = oT.FullName;
+                    obj.Email = oT.Email;
+                    obj.Active = oT.Active;
+                    return obj;
+                }
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

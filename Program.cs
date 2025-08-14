@@ -14,7 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<QLDonHangDbContext>(options => {
     options.UseMySQL(builder.Configuration.GetConnectionString("cnnQLDonHang"));
 });
-  
+builder.Services.AddScoped<IAccountsService, AccountsService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IProductsService, ProductsService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IOrdersService, OrdersService>();

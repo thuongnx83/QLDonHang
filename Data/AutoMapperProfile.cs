@@ -7,7 +7,7 @@ namespace QLDonHangAPI.Data
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile() {
-            //CreateMap<StudentDTO, Student>();
+             CreateMap<AccountInfo, Accounts>();
             //CreateMap<AddressDTO, Address>();
         }
     }

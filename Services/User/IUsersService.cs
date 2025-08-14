@@ -12,5 +12,7 @@ namespace QLDonHangAPI.Services
         Task<Users> Update(Users obj);
         Task<Users> getByIdAsync(int id);
         Task<bool> deleteByIdAsync(int id);
+        Task<bool> checkbyUserName(string username);
+        Task<UserInfo> getLogin(string _username, string _password);
     }
 }
