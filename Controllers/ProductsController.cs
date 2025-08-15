@@ -1,24 +1,29 @@
 ﻿using HotChocolate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using Org.BouncyCastle.Utilities;
 using QLDonHangAPI.Data;
 using QLDonHangAPI.Data.DTO;
 using QLDonHangAPI.Data.Entities;
 using QLDonHangAPI.Services;
 using System.ComponentModel;
-
 namespace QLDonHangAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("fixed")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService _QLDHService;
-        public ProductsController(IProductsService obj)
+        private readonly IDistributedCache _cache;
+        public ProductsController(IProductsService obj, IDistributedCache cache)
         {
             this._QLDHService = obj;
+            _cache = cache;
         }
 
         [HttpGet("getlist")]
@@ -26,8 +31,26 @@ namespace QLDonHangAPI.Controllers
         {
             try
             {
-                var lst = await _QLDHService.getAllAsync();
-                return Ok(lst);
+                string cacheKey = "key_cache_list_product";
+                string cachedData = await _cache.GetStringAsync(cacheKey);
+
+                if (cachedData != null)
+                {
+                   
+                    return Ok(JsonConvert.DeserializeObject<List<Products>>(cachedData) );
+                }
+                else
+                {
+                    var lst = await _QLDHService.getAllAsync(); 
+                    var cacheEntryOptions = new DistributedCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+                    };
+
+                    await _cache.SetStringAsync(cacheKey, JsonConvert.SerializeObject(lst), cacheEntryOptions);
+
+                    return Ok(lst);
+                } 
             }
             catch (Exception ex)
             { 
