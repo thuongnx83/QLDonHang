@@ -90,5 +90,17 @@ namespace QLDonHangAPI.Services
                 return false;
             }
         }
+        public async Task<List<Orders>> getHistoryUser(int userid)
+        {
+            try
+            {
+                var lst = await _QLDonHangDbContext.Orders.Where(x=>x.UserId== userid).ToListAsync();
+                return lst;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

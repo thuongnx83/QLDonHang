@@ -12,5 +12,6 @@ namespace QLDonHangAPI.Services
         Task<Orders> Update(Orders obj);
         Task<Orders> getByIdAsync(int id);
         Task<bool> deleteByIdAsync(int id);
+        Task<List<Orders>> getHistoryUser(int userid);
     }
 }
