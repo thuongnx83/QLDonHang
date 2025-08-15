@@ -108,7 +108,7 @@ namespace QLDonHangAPI.Services
         {
             try
             {
-                var lst = await _QLDonHangDbContext.Database.SqlQueryRaw<ReportDay>($"Select p.Id,p.Name,SUM(i.Total) as TotalItem,SUM(i.TotalPrice) as TotalValue  from qlbanhang.Products p left join qlbanhang.orderitem i on i.ProductID=p.Id WHERE day(i.DateCreate)={0} and month()(i.DateCreate)={1} and year(i.DateCreate)={2} GROUP BY p.Id, p.Name", new object[] { day.Day, day.Month, day.Year }).ToListAsync();
+                var lst = await _QLDonHangDbContext.Database.SqlQueryRaw<ReportDay>($"Select p.Id,p.Name,SUM(i.Total) as TotalItem,SUM(i.TotalPrice) as TotalValue  from Products p left join orderitem i on i.ProductID=p.Id WHERE day(i.DateCreate)={0} and month(i.DateCreate)={1} and year(i.DateCreate)={2} GROUP BY p.Id, p.Name", new object[] { day.Day, day.Month, day.Year }).ToListAsync();
                 
                 return  lst; 
             }
@@ -121,7 +121,7 @@ namespace QLDonHangAPI.Services
         {
             try
             {
-                var lst = await _QLDonHangDbContext.Database.SqlQueryRaw<ReportWeek>($"Select p.Id,p.Name,SUM(i.Total) as TotalItem,SUM(i.TotalPrice) as TotalValue  from qlbanhang.Products p left join qlbanhang.orderitem i on i.ProductID=p.Id WHERE day(i.DateCreate)={0} and month()(i.DateCreate)={1} and year(i.DateCreate)={2} GROUP BY p.Id, p.Name", new object[] { day.Day, day.Month, day.Year }).ToListAsync();
+                var lst = await _QLDonHangDbContext.Database.SqlQueryRaw<ReportWeek>($"Select p.Id,p.Name,SUM(i.Total) as TotalItem,SUM(i.TotalPrice) as TotalValue  from Products p left join orderitem i on i.ProductID=p.Id WHERE day(i.DateCreate)={0} and month(i.DateCreate)={1} and year(i.DateCreate)={2} GROUP BY p.Id, p.Name", new object[] { day.Day, day.Month, day.Year }).ToListAsync();
                 return lst;
             }
             catch (Exception ex)
@@ -133,7 +133,7 @@ namespace QLDonHangAPI.Services
         { 
                 try
                 {
-                    var lst = await _QLDonHangDbContext.Database.SqlQueryRaw<ReportMonth>($"Select p.Id,p.Name,SUM(i.Total) as TotalItem,SUM(i.TotalPrice) as TotalValue  from qlbanhang.Products p left join qlbanhang.orderitem i on i.ProductID=p.Id WHERE day(i.DateCreate)={0} and month()(i.DateCreate)={1} and year(i.DateCreate)={2} GROUP BY p.Id, p.Name", new object[] { year, year, year }).ToListAsync();
+                    var lst = await _QLDonHangDbContext.Database.SqlQueryRaw<ReportMonth>($"Select p.Id,p.Name,SUM(i.Total) as TotalItem,SUM(i.TotalPrice) as TotalValue  from Products p left join orderitem i on i.ProductID=p.Id WHERE day(i.DateCreate)={0} and month(i.DateCreate)={1} and year(i.DateCreate)={2} GROUP BY p.Id, p.Name", new object[] { year, year, year }).ToListAsync();
                     return lst;
                 }
                 catch (Exception ex)
