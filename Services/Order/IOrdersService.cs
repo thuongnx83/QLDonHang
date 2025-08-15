@@ -13,5 +13,9 @@ namespace QLDonHangAPI.Services
         Task<Orders> getByIdAsync(int id);
         Task<bool> deleteByIdAsync(int id);
         Task<List<Orders>> getHistoryUser(int userid);
+
+        Task<List<ReportDay>> reportDay(DateTime day);
+        Task<List<ReportWeek>> reportWeek(DateTime day);
+        Task<List<ReportMonth>> reportMonth(int year);
     }
 }
